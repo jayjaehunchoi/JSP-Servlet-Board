@@ -64,7 +64,6 @@ public class BoardDetailController extends HttpServlet {
 		if(file == null) {
 			return;
 		}
-		
 		for(int i = 0 ; i < files.length; i++) {
 			if(file.getFileName().equals(files[i])) {
 				encodedFile =  URLEncoder.encode(files[i], "UTF-8");
@@ -72,8 +71,7 @@ public class BoardDetailController extends HttpServlet {
 			}
 		}
 		request.setAttribute("files", encodedFile);
-		
-		
+
 	}
 	
 }

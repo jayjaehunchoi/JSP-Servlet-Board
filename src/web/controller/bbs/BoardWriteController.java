@@ -71,8 +71,10 @@ public class BoardWriteController extends HttpServlet{
 			response.sendRedirect("/Matrip/boards/write");
 			return;
 		}
-
-		fileService.fileUpload(file);
+		
+		if(file.getFileName() != null) {
+			fileService.fileUpload(file);
+		}
 		
 		response.sendRedirect("/Matrip/boards?page="+session.getAttribute("page"));
 	}
