@@ -7,6 +7,17 @@
   <title>Document</title>
 </head>
 <body>
+<form action="/Matrip/search">
+	<input class ="join" placeholder="검색어를 입력하세요" name="search" type="text">
+	<input class = "joinBt" type="submit" value="검색">
+	<select name="searchType" >
+	    <option value="blog">=== 선택 ===</option>
+	    <option value="blog" selected>블로그</option>
+	    <option value="cafearticle">카페</option>
+	    <option value="kin">지식IN</option>
+	    <option value="local">지역</option>
+  	</select>
+</form>
   <a href="/Matrip/member/login"> 로그인 </a> <br>
   <a href="/Matrip/member/join"> 회원가입 </a> <br>
   <a href="/Matrip/member/mypage"> 마이페이지 </a> <br>
