@@ -16,7 +16,7 @@ public class SearchCafeService extends SearchService{
         Map<String, String> requestHeaders = createRequestHeaders();
         String jsonString = parseJson(get(apiURL,requestHeaders));
 		
-        List<Object> Forms = createSearchForms(jsonString);
-		return Forms;
+        List<Object> forms = createSearchForms(jsonString);
+		return forms;
 	}
 }
