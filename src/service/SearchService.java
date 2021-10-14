@@ -4,23 +4,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import utils.SearchConst;
 import web.form.SearchForm;
 
 public abstract class SearchService {
 	
 	public abstract List<Object> setSearchApi(String input);
 	
-
+	
+	// call naver search api (authorization check)
 	protected String get(String apiUrl, Map<String, String> requestHeaders){
         HttpURLConnection con = connect(apiUrl);
         try {
@@ -28,7 +33,6 @@ public abstract class SearchService {
             for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
                 con.setRequestProperty(header.getKey(), header.getValue());
             }
-
 
             int responseCode = con.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
@@ -63,21 +67,22 @@ public abstract class SearchService {
         try (BufferedReader lineReader = new BufferedReader(streamReader)) {
             StringBuilder responseBody = new StringBuilder();
 
-
             String line;
             while ((line = lineReader.readLine()) != null) {
                 responseBody.append(line);
             }
-
 
             return responseBody.toString();
         } catch (IOException e) {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
     }
-
-    protected List<Object> createSearchForms(JSONArray jArray, int length) {
-    	
+    
+    // put search result(json arr) in forms
+    protected List<Object> createSearchForms(String jsonString) {
+		JSONArray jArray = new JSONArray(jsonString); 
+		int length = jArray.length();
+		
 		List<Object> forms = new ArrayList<>(); 
 		for(int i = 0 ; i < length; i++) {
 			JSONObject object = jArray.getJSONObject(i);
@@ -91,5 +96,41 @@ public abstract class SearchService {
 		}
 		return forms;
 	}
+    
+    // encode search word
+    protected String encodeInputText(String input) {
+    	 String text = null;
+         try {
+             text = URLEncoder.encode(input, "UTF-8");
+         } catch (UnsupportedEncodingException e) {
+             throw new RuntimeException("검색어 인코딩 실패",e);
+         }
+         return text;
+    }
+    
+    // parse json to make JSONArray
+    protected String parseJson(String jsonString) {
+        int idx = 0;
+		for(int i = 0 ; i < jsonString.length(); i++) {
+			if(jsonString.charAt(i) == '[') {
+				idx = i;
+				break;
+			}
+		}
+		jsonString = jsonString.substring(idx,jsonString.length());
+		return jsonString;
+    }
+    
+    // put authorization info in headers
+    protected Map<String, String> createRequestHeaders(){
+    	Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("X-Naver-Client-Id", SearchConst.CLIENT_ID);
+        requestHeaders.put("X-Naver-Client-Secret", SearchConst.CLIENT_SECRET);
+        return requestHeaders;
+    }
+    
+    protected String urlResolver(String searchType, String text) {
+    	return "https://openapi.naver.com/v1/search/" + searchType + ".json?query=" + text;
+    }
 	
 }
