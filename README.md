@@ -2,8 +2,8 @@
 
 > **2021-10-09 ~ 2021-10-12**   
 > MVC 모델과 JSP Servlet을 이용하여 설계 및 구현한 게시판입니다.    
-> 심플하게 CRUD 기능만 구현한 게시판 Web 프로젝트이지만  
-> validation 과 database 설계, MVC 모델에 대해 많이 고민해볼 수 있었습니다. 
+> 심플하게 CRUD 기능 + Naver 검색 api만 구현한 게시판 Web 프로젝트이지만  
+> validation 과 database 설계, MVC 모델, 상속에 대해 많이 고민해볼 수 있었습니다. 
 
 ## ⌨️ Project Intro ⌨️
 ### What I considered
@@ -13,6 +13,7 @@
 *  ``` POST ``` 메서드 저장, 수정 로직 수행 후 ``` RequestDispatcher.forward(request, response)``` 가 사용된다면 발생하는 중복 문제 해결 방안에 대해 고민하고 개발하였음.  
 *  ``` HttpSession ```의 활용성에 대해 고민하고 개발에 적용하였음 <u>로그인, 페이지 매핑, 목록 등</u>
 *  비밀번호 암호화 방안에 대해 고민하고 최종적으로 ``` Sha-256 알고리즘 , Salt```를 통해 암호화를 실시하였음.
+*  Naver 검색 api를 활용한 ``` search engine ``` 구현에 상속과 다형성을 고려하여 클래스를 설계하였음.
 *  ``` template engine ```과 ``` servlet ```의 완전 분리를 지향하였음.
 
 ### Service
@@ -50,14 +51,22 @@
 │          MemberStatus.java
 │
 ├─service
-│      BbsService.java
-│      CommentService.java
-│      MemberService.java
-│      MyFileService.java
+│  │  BbsService.java
+│  │  CommentService.java
+│  │  MemberService.java
+│  │  MyFileService.java
+│  │  SearchService.java
+│  │
+│  └─searchServiceImpl
+│          SearchBlogService.java
+│          SearchCafeService.java
+│          SearchKinService.java
+│          SearchLocalService.java
 │
 ├─utils
 │      JdbcTemplate.java
 │      MemberConst.java
+│      SearchConst.java
 │      ShaEncoder.java
 │
 └─web
@@ -65,6 +74,7 @@
     │
     ├─controller
     │  │  MemberFrontController.java
+    │  │  SearchController.java
     │  │
     │  ├─bbs
     │  │      BoardDetailController.java
@@ -94,6 +104,7 @@
     │
     └─form
             MemberForm.java
+            SearchForm.java
 ```
 
 ## 🛠 ERD 🛠
