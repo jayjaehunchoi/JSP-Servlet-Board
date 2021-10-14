@@ -26,7 +26,7 @@
 * Java Version 8
 * JSP
 * MySQL Version 8.0.23
-* Jars ``` ojdbc8.jar , cos.jar, jstl-1.2.jar, json-20210307.jar ```
+* Jars : ``` ojdbc8.jar ``` ,``` cos.jar ```,``` jstl-1.2.jar ```,``` json-20210307.jar ```
 
 ## 📁 Project Directories 📁
 ```
