@@ -21,6 +21,7 @@
 * Board, Comment (CRUD)
 * File Upload and Download
 * My Page (Recent article, Info update)
+* Naver Search api
 
 ## ⚙️ Requirements ⚙️
 * Java Version 8
