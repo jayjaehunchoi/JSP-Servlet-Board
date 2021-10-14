@@ -114,7 +114,7 @@ public class BbsRepository {
 	}
 	
 	public Long getPrevLast(int pageNumber) {
-		String sql = "select bbs_id from bbs order by bbs_id desc limit ?,?";
+		String sql = "select bbs_id from bbs where bbs_available = 1 order by bbs_id desc limit ?,?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -194,7 +194,7 @@ public class BbsRepository {
 	}
 	
 	public int countBbs() {
-		String sql = "select count(bbs_id) from bbs";
+		String sql = "select count(bbs_id) from bbs where bbs_available = 1";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -213,7 +213,7 @@ public class BbsRepository {
 	}
 
 	public int getCurOrderById(Long BbsId) {
-		String sql = "select count(bbs_id) from bbs where bbs_id >= ?";
+		String sql = "select count(bbs_id) from bbs where bbs_id >= ? and bbs_available = 1";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -259,7 +259,7 @@ public class BbsRepository {
 	 * @return when succeed = res, else = -1
 	 */
 	public int delete(Long bbsID) {
-		String sql = "delete from bbs where bbs_id = ?";
+		String sql = "update bbs set bbs_available = 0 where bbs_id = ?";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
