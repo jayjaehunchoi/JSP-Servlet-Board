@@ -254,7 +254,7 @@ public class BbsRepository {
 	}
 	
 	/**
-	 * to be updated (need handle comments table and files table)
+	 * update completed
 	 * @param bbsID
 	 * @return when succeed = res, else = -1
 	 */
