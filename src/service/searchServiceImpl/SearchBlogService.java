@@ -32,15 +32,16 @@ public class SearchBlogService extends SearchService {
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String jsonString = get(apiURL,requestHeaders);
-        
+
         int idx = 0;
 		for(int i = 0 ; i < jsonString.length(); i++) {
 			if(jsonString.charAt(i) == '[') {
 				idx = i;
+				break;
 			}
 		}
 		jsonString = jsonString.substring(idx,jsonString.length());
-        
+
 		JSONArray jArray = new JSONArray(jsonString); 
 		int length = jArray.length();
 		

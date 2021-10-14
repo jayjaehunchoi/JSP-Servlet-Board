@@ -36,6 +36,7 @@ public class SearchLocalService extends SearchService{
 		for(int i = 0 ; i < jsonString.length(); i++) {
 			if(jsonString.charAt(i) == '[') {
 				idx = i;
+				break;
 			}
 		}
 		jsonString = jsonString.substring(idx,jsonString.length());
