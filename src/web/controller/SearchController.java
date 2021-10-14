@@ -23,7 +23,11 @@ public class SearchController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String input = request.getParameter("search");
 		String searchType = request.getParameter("searchType");
-		
+
+		if(input.equals("") || isInputEmpty(input)) {
+			response.sendRedirect("/Matrip");
+			return;
+		}
 		
 		SearchService sc = getSearchService(searchType,request);
 		
@@ -64,6 +68,16 @@ public class SearchController extends HttpServlet{
 		
 		return sc;
 			
+	}
+	
+	private boolean isInputEmpty(String input) {
+		int cnt = 0;
+		for(int i = 0 ; i < input.length(); i++) {
+			if(input.substring(i,i+1).equals(" ")) {
+				cnt++;
+			}
+		}
+		return cnt == input.length();
 	}
 	
 }
