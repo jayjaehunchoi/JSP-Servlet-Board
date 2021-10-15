@@ -24,7 +24,7 @@ public class CommentDeleteController extends HttpServlet{
 		request.setCharacterEncoding("UTF-8");
 		Long bbsId = (Long) session.getAttribute("bbsId");
 		
-		// double check , if member is a person who write comment which requested to delete.
+		// double check , if member is a person who write comment which is requested to delete.
 		if(member == null) {
 			session.setAttribute("from", "/Matrip/boards/board?bbsID="+bbsId);
 			response.sendRedirect("/Matrip/member/login");

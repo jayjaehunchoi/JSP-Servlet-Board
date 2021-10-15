@@ -8,10 +8,13 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.sun.org.slf4j.internal.Logger;
 
 import utils.MemberConst;
 import web.MyView;
@@ -32,7 +35,7 @@ import web.controller.member.MemberWithdrawlController;
  */
 @WebServlet("/member/*")
 public class MemberFrontController extends HttpServlet{
-
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Map<String,MemberController> controllerMap = new HashMap<>();
@@ -86,6 +89,7 @@ public class MemberFrontController extends HttpServlet{
 		String viewName = controller.process(paramMap, model, request);
 		
 		HttpSession session = request.getSession(false);
+
 		if(session.getAttribute("from") != null) {
 			String viewPath = (String)session.getAttribute("from") ;
 			session.removeAttribute("from");

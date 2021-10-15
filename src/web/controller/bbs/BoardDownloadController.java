@@ -23,7 +23,7 @@ public class BoardDownloadController extends HttpServlet{
 		String mimeType = getServletContext().getMimeType(file.toString());
 		
 		if(mimeType == null) {
-			response.setContentType("application/octet-stream"); // 파일 관련 데이터
+			response.setContentType("application/octet-stream"); // file data
 		}
 		
 		String downloadName = null;
