@@ -104,6 +104,8 @@ public class BbsRepository {
 				bbs.setLoginId(memberService.findById(rs.getLong(3)).getLoginId());
 				list.add(bbs);
 			}
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
