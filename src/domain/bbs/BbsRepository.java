@@ -60,7 +60,7 @@ public class BbsRepository {
 	}
 	
 	public Long write(Bbs bbs, Long userID) {
-		String sql = "insert into bbs values (?,?,?,?,?,?)";
+		String sql = "insert into bbs values (?,?,?,?,?)";
 		PreparedStatement pstmt = null;
 		Long val = getNext();
 		try {
@@ -70,7 +70,6 @@ public class BbsRepository {
 			pstmt.setLong(3, userID);
 			pstmt.setTimestamp(4, getDate());
 			pstmt.setString(5, bbs.getBbsContent());
-			pstmt.setInt(6, 1);
 			pstmt.executeUpdate();
 			commit(conn);
 			return val;
@@ -85,7 +84,7 @@ public class BbsRepository {
 	}
 	
 	public List<Bbs> getList(int pageNumber){
-		String sql = "select * from bbs where bbs_id < ? and bbs_available = 1 order by bbs_id desc limit 10";
+		String sql = "select * from bbs where bbs_id < ? order by bbs_id desc limit 10";
 		List<Bbs> list = new ArrayList<Bbs>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -100,12 +99,9 @@ public class BbsRepository {
 				bbs.setUserID(rs.getLong(3));
 				bbs.setBbsDate(rs.getTimestamp(4));
 				bbs.setBbsContent(rs.getString(5));
-				bbs.setBbsAvailable(rs.getInt(6));
 				bbs.setLoginId(memberService.findById(rs.getLong(3)).getLoginId());
 				list.add(bbs);
 			}
-			
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -116,7 +112,7 @@ public class BbsRepository {
 	}
 	
 	public Long getPrevLast(int pageNumber) {
-		String sql = "select bbs_id from bbs where bbs_available = 1 order by bbs_id desc limit ?,?";
+		String sql = "select bbs_id from bbs order by bbs_id desc limit ?,?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -138,7 +134,7 @@ public class BbsRepository {
 	}
 	
 	public boolean nextPage(int pageNumber) {
-		String sql = "select * from bbs where bbs_id < ? and bbs_available = 1";
+		String sql = "select * from bbs where bbs_id < ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -172,15 +168,16 @@ public class BbsRepository {
 				bbs.setUserID(rs.getLong(3));
 				bbs.setBbsDate(rs.getTimestamp(4));
 				bbs.setBbsContent(rs.getString(5));
-				bbs.setBbsAvailable(rs.getInt(6));
 				bbs.setLoginId(memberService.findById(rs.getLong(3)).getLoginId());
-				if(rs.getString("member_login_id") != null) {
-					Comment comment = new Comment(rs.getString("member_login_id"), rs.getString("comment_content"));
+				if(rs.getString("comment_content") != null) {
+					Comment comment = new Comment(rs.getLong("c.member_id"), rs.getString("comment_content"));
 					comment.setId(rs.getLong("comment_id"));
+					comment.setMember(memberService.findById(comment.getMemberId()));
 					bbs.addComments(comment);
 					while(rs.next()) {
-						comment = new Comment(rs.getString("member_login_id"), rs.getString("comment_content"));
+						comment = new Comment(rs.getLong("c.member_id"), rs.getString("comment_content"));
 						comment.setId(rs.getLong("comment_id"));
+						comment.setMember(memberService.findById(comment.getMemberId()));
 						bbs.addComments(comment);
 					}
 				}
@@ -196,7 +193,7 @@ public class BbsRepository {
 	}
 	
 	public int countBbs() {
-		String sql = "select count(bbs_id) from bbs where bbs_available = 1";
+		String sql = "select count(bbs_id) from bbs";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -215,7 +212,7 @@ public class BbsRepository {
 	}
 
 	public int getCurOrderById(Long BbsId) {
-		String sql = "select count(bbs_id) from bbs where bbs_id >= ? and bbs_available = 1";
+		String sql = "select count(bbs_id) from bbs where bbs_id >= ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -255,13 +252,9 @@ public class BbsRepository {
 		return -1;	
 	}
 	
-	/**
-	 * update completed
-	 * @param bbsID
-	 * @return when succeed = res, else = -1
-	 */
+
 	public int delete(Long bbsID) {
-		String sql = "update bbs set bbs_available = 0 where bbs_id = ?";
+		String sql = "delete from bbs where bbs_id = ?";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -16,12 +16,13 @@ import utils.MemberConst;
 public class MemberRepository {
 	
 	Connection conn;
+	
 	public MemberRepository (Connection conn) {
 		this.conn = conn;
 	}
 	
 	public int save(Member member) {
-		String sql = "insert into members (member_login_id,member_password,member_email,salt,create_date,update_date,member_status) values (?,?,?,?,?,?,?)";
+		String sql = "insert into members (member_login_id,member_password,member_email,salt,create_date,update_date) values (?,?,?,?,?,?)";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -31,7 +32,6 @@ public class MemberRepository {
 			pstmt.setString(4, member.getSalt());
 			pstmt.setTimestamp(5, member.getCreateDate());
 			pstmt.setTimestamp(6, member.getUpdateDate());
-			pstmt.setString(7, member.getMemberStatus().name());
 			pstmt.executeUpdate();
 			commit(conn);
 			return MemberConst.JOIN_SUCCESSED;
@@ -62,7 +62,6 @@ public class MemberRepository {
 				member.setSalt(rs.getString(5));
 				member.setCreateDate(rs.getTimestamp(6));
 				member.setUpdateDate(rs.getTimestamp(7));
-				member.setMemberStatus(MemberStatus.valueOf(rs.getString(8)));
 			}
 			return member;
 		} catch (Exception e) {
@@ -90,7 +89,6 @@ public class MemberRepository {
 				member.setSalt(rs.getString(5));
 				member.setCreateDate(rs.getTimestamp(6));
 				member.setUpdateDate(rs.getTimestamp(7));
-				member.setMemberStatus(MemberStatus.valueOf(rs.getString(8)));
 				return member;
 			}
 			return null;
@@ -119,7 +117,6 @@ public class MemberRepository {
 				member.setSalt(rs.getString(5));
 				member.setCreateDate(rs.getTimestamp(6));
 				member.setUpdateDate(rs.getTimestamp(7));
-				member.setMemberStatus(MemberStatus.valueOf(rs.getString(8)));
 				return member;
 			}
 			return null;
@@ -178,7 +175,7 @@ public class MemberRepository {
 	}
 	
 	public List<Bbs> findBbsByMemberId(Long id){
-		String sql = "select * from members m join bbs b on m.member_id = b.member_id where m.member_id = ? and b.bbs_available = 1 order by bbs_id desc limit 10";
+		String sql = "select * from members m join bbs b on m.member_id = b.member_id where m.member_id = ? order by bbs_id desc limit 10";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Bbs> bbsList = new ArrayList<Bbs>();
@@ -193,7 +190,6 @@ public class MemberRepository {
 				bbs.setUserID(rs.getLong("member_id"));
 				bbs.setBbsDate(rs.getTimestamp("bbs_date"));
 				bbs.setBbsContent(rs.getString("bbs_content"));
-				bbs.setBbsAvailable(rs.getInt("bbs_available"));
 				
 				bbsList.add(bbs);
 			}

@@ -13,7 +13,6 @@ public class Bbs {
 	private Long userID; // Fk references member (member_id)
 	private Timestamp bbsDate;
 	private String bbsContent;
-	private int bbsAvailable;
 	private String loginId; // not stored in db (BbsForm will be updated)
 	private List<Comment> comments = new ArrayList<>(); // not stored in db, 1:N mapping (mapped by commentId)
 	
@@ -47,12 +46,6 @@ public class Bbs {
 	public void setBbsContent(String bbsContent) {
 		this.bbsContent = bbsContent;
 	}
-	public int getBbsAvailable() {
-		return bbsAvailable;
-	}
-	public void setBbsAvailable(int bbsAvailable) {
-		this.bbsAvailable = bbsAvailable;
-	}
 	public String getLoginId() {
 		return loginId;
 	}
@@ -67,12 +60,5 @@ public class Bbs {
 	public List<Comment> getComments(){
 		return comments;
 	}
-	@Override
-	public String toString() {
-		return "Bbs [bbsID=" + bbsID + ", bbsTitle=" + bbsTitle + ", userID=" + userID + ", bbsDate=" + bbsDate
-				+ ", bbsContent=" + bbsContent + ", bbsAvailable=" + bbsAvailable + ", loginId=" + loginId
-				+ ", comments=" + comments + "]";
-	}
-	
 	
 }

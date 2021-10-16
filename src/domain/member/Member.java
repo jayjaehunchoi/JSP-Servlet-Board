@@ -12,7 +12,6 @@ public class Member {
 	private String salt;
 	private Timestamp createDate;
 	private Timestamp updateDate;
-	private MemberStatus memberStatus; // To Be Updated , for manage withdrawl members
 	
 	public Long getId() {
 		return id;
@@ -48,7 +47,6 @@ public class Member {
 		this.loginId = loginId;
 		this.password = password;
 		this.email = email;
-		memberStatus = MemberStatus.EXISTED;
 		createDate = new Timestamp(System.currentTimeMillis());
 		updateDate = createDate;
 	}
@@ -72,13 +70,6 @@ public class Member {
 	}
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
-	}
-	public MemberStatus getMemberStatus() {
-		return memberStatus;
-	}
-	public void setMemberStatus(MemberStatus memberStatus) {
-		this.memberStatus = memberStatus;
-		
 	}
 	
 	

@@ -62,9 +62,9 @@
 				<c:forEach var="comments" items="${commentList}">
 				<tbody>
 					<tr>
-						<td style="width: 20%;">${comments.memberLoginId}</td>
+						<td style="width: 20%;">${comments.member.loginId}</td>
 						<td colspan="2">${comments.commentContent}</td>
-						<c:if test="${member.loginId eq comments.memberLoginId}"  var="result" scope="page">
+						<c:if test="${member.loginId eq comments.member.loginId}"  var="result" scope="page">
 						<td><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="/Matrip/comments/delete?commentId=${comments.id}">삭제</a></td>
 						</c:if>
 					</tr>

@@ -1,15 +1,18 @@
 package domain.comment;
 
+import domain.member.Member;
+
 public class Comment {
 	
 	private Long id;
 	private Long bbsId; // FK references bbs (bbsID);
-	private String memberLoginId; // no FK , managed by memberLoginId col (will be updated to manage this var with memberId index)
+	private Long memberId;
 	private String commentContent;
+	private Member member; // not stored in db, manage member with memberId 
 	
 	
-	public Comment(String memberLoginId, String commentContent) {
-		this.memberLoginId = memberLoginId;
+	public Comment(Long memberId, String commentContent) {
+		this.memberId = memberId;
 		this.commentContent = commentContent;
 	}
 	
@@ -19,11 +22,11 @@ public class Comment {
 	public void setBbsId(Long bbsId) {
 		this.bbsId = bbsId;
 	}
-	public String getMemberLoginId() {
-		return memberLoginId;
+	public Long getMemberId() {
+		return memberId;
 	}
-	public void setMemberLoginId(String memberLoginId) {
-		this.memberLoginId = memberLoginId;
+	public void setMemberId(Long memberId) {
+		this.memberId = memberId;
 	}
 	public Long getId() {
 		return id;
@@ -36,6 +39,14 @@ public class Comment {
 	}
 	public void setCommentContent(String commentContent) {
 		this.commentContent = commentContent;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
 	}
 	
 	
