@@ -108,7 +108,7 @@
 ## 🛠 ERD 🛠
 ![image](https://user-images.githubusercontent.com/87312401/137659315-6db31234-856a-4849-b0c1-96150920ca92.png)
 
-## 🛠 SQL 🛠
+## 📃 SQL 📃
 ```mysql
 CREATE TABLE `members` (
   `member_id` int NOT NULL AUTO_INCREMENT,
