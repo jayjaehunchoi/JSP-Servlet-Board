@@ -106,7 +106,7 @@
 ```
 
 ## 🛠 ERD 🛠
-![image](https://user-images.githubusercontent.com/87312401/137275727-d868b3ff-9293-4125-a9c5-4c87ee407ea7.png)
+![image](https://user-images.githubusercontent.com/87312401/137659000-72a44bf3-8f6f-46d3-a2c2-4225ae4d7bd5.png)
 
 ## 📖 To Be Updated 📖
 * 현재는 members 테이블의 ``` Delete ``` 로직에 실제 데이터가 삭제되지만, 추후 ``` status column``` 을 두고 db에 삭제 데이터 보관하는 방식 고려 중
