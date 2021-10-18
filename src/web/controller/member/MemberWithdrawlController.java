@@ -27,7 +27,7 @@ public class MemberWithdrawlController implements MemberController{
 		if(request.getMethod().equals("POST")){
 			if(isPasswordSameCheck(paramMap, member)) {
 				int memberDelRes = memberService.deleteMember(member);
-				commentService.deleteCommentByMember(member.getId());
+				//commentService.deleteCommentByMember(member.getId());
 				if(memberDelRes == -1) {
 					return "checkPw";
 				}
