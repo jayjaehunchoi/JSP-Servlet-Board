@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import domain.member.Member;
+import service.CommentService;
 import service.MemberService;
 import utils.MemberConst;
 import utils.ShaEncoder;
@@ -13,6 +14,7 @@ import utils.ShaEncoder;
 public class MemberWithdrawlController implements MemberController{
 
 	private MemberService memberService = MemberService.getInstance();
+	private CommentService commentService = CommentService.getInstance(); 
 	
 	@Override
 	public String process(Map<String, String> paramMap, Map<String, Object> model, HttpServletRequest request) {
@@ -24,11 +26,12 @@ public class MemberWithdrawlController implements MemberController{
 
 		if(request.getMethod().equals("POST")){
 			if(isPasswordSameCheck(paramMap, member)) {
-				int res = memberService.deleteMember(member);
-				if(res == -1) {
+				int memberDelRes = memberService.deleteMember(member);
+				commentService.deleteCommentByMember(member.getId());
+				if(memberDelRes == -1) {
 					return "checkPw";
 				}
-				session.invalidate();
+				session.removeAttribute(MemberConst.MY_SESSION_ID);;
 				return "login";
 			}
 		}

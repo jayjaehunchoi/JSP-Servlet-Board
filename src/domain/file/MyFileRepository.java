@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import domain.member.Member;
-import domain.member.MemberStatus;
 
 import static utils.JdbcTemplate.*;
 public class MyFileRepository {

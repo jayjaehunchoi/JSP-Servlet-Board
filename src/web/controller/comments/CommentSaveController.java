@@ -12,11 +12,13 @@ import javax.servlet.http.HttpSession;
 import domain.comment.Comment;
 import domain.member.Member;
 import service.CommentService;
+import service.MemberService;
 import utils.MemberConst;
 
 @WebServlet("/comments/save")
 public class CommentSaveController extends HttpServlet{
 	private CommentService commentService = CommentService.getInstance();
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
@@ -39,7 +41,7 @@ public class CommentSaveController extends HttpServlet{
 			return;
 		}
 		
-		Comment comment = new Comment(member.getLoginId(), commentContent);
+		Comment comment = new Comment(member.getId(), commentContent);
 		comment.setBbsId(bbsId);
 		commentService.saveComment(comment);
 		response.sendRedirect("/Matrip/boards/board?bbsID="+bbsId);

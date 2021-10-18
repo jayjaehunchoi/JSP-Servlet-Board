@@ -36,4 +36,11 @@ public class CommentService {
 		close(conn);
 		return res;
 	}
+	
+	public int deleteCommentByMember(Long memberId) {
+		Connection conn = getConnection();
+		int res = new CommentRepository(conn).deleteCommentByMemberId(memberId);
+		close(conn);
+		return res;
+	}
 }
