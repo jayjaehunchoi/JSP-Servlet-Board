@@ -108,6 +108,61 @@
 ## 🛠 ERD 🛠
 ![image](https://user-images.githubusercontent.com/87312401/137659315-6db31234-856a-4849-b0c1-96150920ca92.png)
 
+## 🛠 SQL 🛠
+```mysql
+CREATE TABLE `members` (
+  `member_id` int NOT NULL AUTO_INCREMENT,
+  `member_login_id` varchar(30) DEFAULT NULL,
+  `member_password` varchar(100) DEFAULT NULL,
+  `member_email` varchar(30) DEFAULT NULL,
+  `salt` varchar(100) DEFAULT NULL,
+  `create_date` timestamp NULL DEFAULT NULL,
+  `update_date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`member_id`),
+  UNIQUE KEY `member_login_id` (`member_login_id`),
+  UNIQUE KEY `member_email` (`member_email`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--==============================================================================================================
+
+CREATE TABLE `bbs` (
+  `bbs_id` int NOT NULL,
+  `bbs_title` varchar(100) NOT NULL,
+  `member_id` int NOT NULL,
+  `bbs_date` timestamp NOT NULL,
+  `bbs_content` text NOT NULL,
+  PRIMARY KEY (`bbs_id`),
+  KEY `member_id` (`member_id`),
+  CONSTRAINT `bbs_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--==============================================================================================================
+
+CREATE TABLE `comments` (
+  `comment_id` int NOT NULL AUTO_INCREMENT,
+  `bbs_id` int DEFAULT NULL,
+  `member_id` int DEFAULT NULL,
+  `comment_content` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`comment_id`),
+  KEY `fk_comments_bbs` (`bbs_id`),
+  KEY `member_id` (`member_id`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_comments_bbs` FOREIGN KEY (`bbs_id`) REFERENCES `bbs` (`bbs_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--==============================================================================================================
+
+CREATE TABLE `files` (
+  `file_id` int NOT NULL AUTO_INCREMENT,
+  `bbs_id` int DEFAULT NULL,
+  `file_name` varchar(100) DEFAULT NULL,
+  `file_real_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`file_id`),
+  KEY `fk_files_bbs` (`bbs_id`),
+  CONSTRAINT `fk_files_bbs` FOREIGN KEY (`bbs_id`) REFERENCES `bbs` (`bbs_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+
 ## 📖 To Be Updated 📖
 * 현재는 members 테이블의 ``` Delete ``` 로직에 실제 데이터가 삭제되지만, 추후 ``` status column``` 을 두고 db에 삭제 데이터 보관하는 방식 고려 중
 * ``` File update ``` 기능 구현 
