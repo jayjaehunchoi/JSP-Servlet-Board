@@ -7,7 +7,7 @@
 
 ## ⌨️ Project Intro ⌨️
 ### What I considered
-* 객체의 생명주기에 따른 테이블 간 적절한 의존 관계 설정, 마냥 ``` 참조키 ```를 줄 것인가 ``` index ```로 관리할 것인가를 고민하였음
+* 객체의 생명주기에 따른 테이블 간 적절한 의존 관계 설정
 * ``` CRUD ``` 구현 시 서버 개발자가 고려해야 할 ``` validation ``` ,``` validation ```의 패키지, 클래스 분리에 대한 고민이 있었음.
 *  ``` servlet, jsp ``` 기반의 개발이기 때문에 ``` form data ``` 를 주고 받는 형태로 개발할 수 있었지만 ``` ajax ```를 사용해서 ``` HTTP body ```에 전달되는 ``` raw data ```를 처리하는 방법에 대해 고민 및 적용하였음. 
 *  ``` POST ``` 메서드 저장, 수정 로직 수행 후 ``` RequestDispatcher.forward(request, response)``` 가 사용된다면 발생하는 중복 문제 해결 방안에 대해 고민하고 개발하였음.  
@@ -31,8 +31,6 @@
 
 ## 📁 Project Directories 📁
 ```
-│  MemberTest.java
-│
 ├─domain
 │  ├─bbs
 │  │      Bbs.java
@@ -49,7 +47,6 @@
 │  └─member
 │          Member.java
 │          MemberRepository.java
-│          MemberStatus.java
 │
 ├─service
 │  │  BbsService.java
